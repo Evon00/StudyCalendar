@@ -1,0 +1,234 @@
+<!doctype html>
+<html>
+  <head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css" integrity="sha384-xOolHFLEh07PJGoPkLv1IbcEPTNtaed2xpHsD9ESMhqIYd0nLMwNLD69Npy4HI+N" crossorigin="anonymous">
+
+    <!-- fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Hahmlet&display=swap" rel="stylesheet">
+
+    <!--reset.css-->
+    <link rel="stylesheet" href="css/reset.css">
+
+    <style>
+      .button_table button, .modal-dialog {font-size: 18px;}
+    </style>
+
+    <title>Study Calendar</title>
+  </head>
+  <body>
+
+    <nav class="navbar navbar-expand-lg navbar-light bg-light border-bottom" >
+      <a class="navbar-brand" href="/"><img src="image/studycalendar.png" width = "100px" height = "100px"></a>
+      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarText" aria-controls="navbarText" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarText">
+        <ul class="navbar-nav mr-auto">
+          <li class="nav-item">
+            <a class="nav-link" href="/">Home</a>
+          </li>
+          <% if(user) { %>
+            <li class="nav-item">
+              <a class="nav-link" href="/mypage">Mypage</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="/profile">Profile</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="/logout">logout</a>
+            </li>
+          <% } else { %>
+            <li class="nav-item">
+              <a class="nav-link" href="/login">Login</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="/register">Register</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="/profile">Profile</a>
+            </li>
+          <% } %>
+        </ul>
+        <span class="navbar-text">
+          <% if(user) { %>
+            <a href = "mypage">환영합니다. <%= user.name %>님</a>
+          <% } else { %>
+            <a href = "login">로그인 한 후에 이용해 주세요.</a>
+          <% } %>
+        </span>
+      </div>
+    </nav>
+
+    <div class = "container">
+      <div id = 'calendar' class = "m-3"></div>
+      <% if(user) { 
+        if(user.id == 'admin'){ %>
+          <div class = "container button_table text-center"> 
+            <button class = "m-1 btn btn-primary" id ="plus">일정 추가</button>
+          </div>
+        <% }
+      } %>
+    </div>
+
+      <div class="container user_alllist mt-3">
+        <% for(var i=0; i < posts.length; i++) { %>
+            <ul class = "container">
+            <div class="card shadow mb-2">
+                <div class="card-header">
+                    Title : <%= posts[i].title %>
+                    <div class = "writer" style = "float:right; font-weight:bold;"><%= posts[i].writer %></div>
+                </div>
+                <div class="card-body">
+                    <p class="card-text">
+                        <%= posts[i].detail %>
+                    </p>
+                    <% if(posts[i].HC == "HTML/CSS") { %>
+                      <span class="badge badge-pill" style = "background-color:#B9F3FC;">HTML/CSS 1</span>
+                  <% } %>
+                  <% if(posts[i].JS == "JavaScript") { %>
+                      <span class="badge badge-pill" style = "background-color:#ffc46b;">JavaScript 1</span>
+                  <% } %>
+                  <% if(posts[i].DB == "DB") { %>
+                      <span class="badge badge-pill" style = "background-color: #CEEDC7;">DB 1</span>
+                  <% } %>
+                  <% if(posts[i].SV == "Server") { %>
+                      <span class="badge badge-pill" style = "background-color: #FEDEFF;">Server 1</span>
+                  <% } %>
+                  <% if(posts[i].ETC == "ETC") { %>
+                      <span class="badge badge-pill" style = "background-color: #E8D5C4;">ETC 1</span>
+                  <% } %>
+                </div>
+                <div class="card-footer text-muted">
+                    <%= posts[i].date %>
+                </div>
+            </div>
+        </ul>
+                <% } %>
+    </div>
+
+    <%- include('footer.html') %>
+
+
+    <!-- calendar modal 창 -->
+    <div class="modal fade" id="calendarModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+        aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">일정을 입력하세요.</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <form action="/" method = "POST">
+                <div class="modal-body">
+                    <div class="form-group">
+                        <label for="taskId" class="col-form-label">일정 내용</label>
+                        <input type="text" class="form-control" id="calendar_content" name="calendar_content">
+                        <label for="taskId" class="col-form-label">시작 날짜</label>
+                        <input type="date" class="form-control" id="calendar_start_date" name="calendar_start_date">
+                        <label for="taskId" class="col-form-label">종료 날짜</label>
+                        <input type="date" class="form-control" id="calendar_end_date" name="calendar_end_date">
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="submit" class="btn btn-primary" id="addCalendar">추가</button>
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal" id="sprintSettingModalClose">취소</button>
+                </div>
+              </form>
+            </div>
+        </div>
+    </div>
+    <!-- //calendar modal 창 -->
+
+
+    <!-- Bootstrap 용 jquery-->
+    <script src="https://code.jquery.com/jquery-3.6.3.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-Fy6S3B9q64WdZWQUiU+q4/2Lc9npb8tCaSX9FK7E8HnRr0Jz8D6OP9dO5Vg3Q9ct" crossorigin="anonymous"></script>
+    
+    <!-- moment.js -->
+    <script src = "https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.4/moment.min.js"></script>
+    
+    <!-- fullcalendar.io cdn-->
+    <script src="https://cdn.jsdelivr.net/npm/fullcalendar@6.1.4/index.global.min.js"></script>
+    
+    <script>
+      document.addEventListener('DOMContentLoaded',function(){
+            $.ajax({
+              type : 'POST',
+              url : 'https://studycalendar-388915.du.r.appspot.com/',
+              data: {id : 'guest'},
+              dataType:'json',
+              success: function(response){
+                console.log(response);
+                var calendarE1 = document.getElementById('calendar');
+                var calendar = new FullCalendar.Calendar(calendarE1,{
+                  themeSystem : 'bootstrap',
+                  timeZone: 'UTC',
+                  initialView : 'dayGridMonth', //월 단위 출력
+                  events : response,
+                  eventColor:'#F49FBC',
+                  eventClick : function(e){
+                    if(confirm(e.event.title+'의 내용을 삭제하시겠습니까?')){
+                      var obj = new Object();
+                      obj.title = e.event.title;
+                      obj.start = moment(e.event.start).format('YYYY-MM-DD');
+                      obj.end = moment(e.event.end).format('YYYY-MM-DD');
+
+                      $(function deleteDate(){
+                        $.ajax({
+                          url : "https://studycalendar-388915.du.r.appspot.com/",
+                          method : "DELETE",
+                          data : {title : e.event.title, start : moment(e.event.start).format('YYYY-MM-DD'), end : moment(e.event.end).format('YYYY-MM-DD')},
+                          success: function(result){
+                            alert('삭제되었습니다.');
+                            e.event.remove();
+                          },
+                          error : function(xhr,status,error){
+                            alert('권한이 없습니다.');
+                          }
+                        })
+                      })
+                    }
+                  },
+                  editable:false, // 마우스로 수정 불가
+                  displayEventTime:false, // 시간 표시 
+                });
+                
+                calendar.render(); //캘린더 렌더
+              },
+              error: function(xhr,status,error){
+                console.log('Error: ', status, error);
+              }
+            });
+          });
+
+      $('#plus').click(function(e){
+            e.preventDefault(); //버튼 클릭시 화면 이동 안하게
+            $('#calendarModal').modal("show"); //일정 추가 모달창 띄우기
+            
+            $("#addCalendar").on("click", function(){
+              var content = $("#calendar_content").val();
+              var start_date = $("#calendar_start_date").val();
+              var end_date = $("#calendar_end_date").val();
+
+              if(content == null || content == ""){
+                alert("내용을 입력해주세요.");
+              } else if (start_date == "" || end_date == ""){
+                alert("날짜를 입력해주세요.");
+              } else if(new Date(end_date) - new Date(start_date) < 0){
+                alert("종료일이 시작일보다 먼저입니다.");
+              }
+            })
+          })
+          
+    </script>
+  </body>
+</html>

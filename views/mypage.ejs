@@ -1,0 +1,171 @@
+<!doctype html>
+<html>
+
+<head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css"
+        integrity="sha384-xOolHFLEh07PJGoPkLv1IbcEPTNtaed2xpHsD9ESMhqIYd0nLMwNLD69Npy4HI+N" crossorigin="anonymous">
+
+    <!-- fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Hahmlet&display=swap" rel="stylesheet">
+
+    <!--reset.css-->
+    <link rel="stylesheet" href="css/reset.css">
+    
+    <title>Study Calendar</title>
+</head>
+
+<body>
+
+    <nav class="navbar navbar-expand-lg navbar-light bg-light border-bottom" >
+      <a class="navbar-brand" href="/"><img src="image/studycalendar.png" width = "100px" height = "100px"></a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarText" aria-controls="navbarText" aria-expanded="false" aria-label="Toggle navigation">
+          <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarText">
+          <ul class="navbar-nav mr-auto">
+            <li class="nav-item">
+              <a class="nav-link" href="/">Home</a>
+            </li>
+            <% if(user) { %>
+              <li class="nav-item">
+                <a class="nav-link" href="/mypage">Mypage</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" href="/profile">Profile</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" href="/logout">logout</a>
+              </li>
+            <% } else { %>
+              <li class="nav-item">
+                <a class="nav-link" href="/login">Login</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" href="/register">Register</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" href="/profile">Profile</a>
+              </li>
+            <% } %>
+          </ul>
+          <span class="navbar-text">
+            <% if(user) { %>
+              <a href = "mypage">환영합니다. <%= user.name %>님</a>
+            <% } else { %>
+              <a href = "login">로그인 한 후에 이용해 주세요.</a>
+            <% } %>
+          </span>
+        </div>
+      </nav>
+
+      <% //자신이 공부한 총 개수 카운팅 - DB에서 정리하고 보낼려고하니 DB에 무리가 간다고 생각.
+        var count_HC = 0;
+        var count_JS = 0;
+        var count_DB = 0;
+        var count_SV = 0;
+        var count_ETC = 0;
+        for(var i = 0; i < posts.length; i++){
+          if(posts[i].HC == "HTML/CSS") count_HC++;
+          if(posts[i].JS == "JavaScript") count_JS++;
+          if(posts[i].DB == "DB") count_DB++;
+          if(posts[i].SV == "Server") count_SV++;
+          if(posts[i].ETC == "ETC") count_ETC++;
+        } 
+      %>
+
+        <div class="container mt-5">
+            <div class="container infomation">
+                <div class="card mb-3" style="max-width: 1080px;">
+                    <div class="row no-gutters">
+                        <div class="col-md-8">
+                            <div class="card-body">
+                                <h5 class="card-title"><%= user.name %></h5>
+                                <p class="card-text"><%= user.purpose %></p>
+                                <% if(count_HC > 0) { %>
+                                  <span class="badge badge-pill" style = "background-color:#B9F3FC;">HTML/CSS <%= count_HC %></span>
+                                <% } %>
+                                <% if(count_JS > 0) { %>
+                                  <span class="badge badge-pill" style = "background-color:#ffc46b;">JavaScript <%= count_JS %></span>
+                                <% } %>
+                                <% if(count_DB > 0) { %>
+                                  <span class="badge badge-pill" style = "background-color: #CEEDC7;">DB <%= count_DB %></span>
+                                <% } %>
+                                <% if(count_SV > 0) { %>
+                                  <span class="badge badge-pill" style = "background-color: #FEDEFF;">Server <%= count_SV %></span>
+                                <% } %>
+                                <% if(count_ETC > 0) { %>
+                                  <span class="badge badge-pill" style = "background-color: #E8D5C4;">ETC <%= count_ETC %></span>
+                                <% } %>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="container write border" style="max-width: 1080px;">
+                <form action = "/mypage" method = "POST">
+                    <h5 class="m-2 text-center" style = "font-size:25px;">Write about what you studided.</h5>
+                    <div class="form-group">
+                        <label for="exampleInputtitle">Title</label>
+                        <input type="text"  class="form-control" name="title">
+                    </div>
+                    <div class="form-group">
+                        <label for="exampleFormControlTextarea1">Details</label>
+                        <textarea class="form-control" id="exampleFormControlTextarea1" rows="4" name = "detail"></textarea>
+                    </div>
+                    <div class="form-group">
+                        <label for="exampleInputdate">Date</label>
+                        <input type="text" placeholder="xxxx.xx.xx" class="form-control" name="date">
+                    </div>
+                    <div class="mb-1">Type</div>
+                    <div class = "form-group">
+                        <div class="form-check form-check-inline">
+                            <input class="form-check-input" type="checkbox" id="inlineCheckbox1" value="HC" name = "check1">
+                            <label class="form-check-label" for="inlineCheckbox1">HTML/CSS</label>
+                        </div>
+                        <div class="form-check form-check-inline">
+                            <input class="form-check-input" type="checkbox" id="inlineCheckbox2" value="JS" name = "check2">
+                            <label class="form-check-label" for="inlineCheckbox2" name = "check2">JavaScript</label>
+                        </div>
+                        <div class="form-check form-check-inline">
+                            <input class="form-check-input" type="checkbox" id="inlineCheckbox3" value="DB" name = "check3">
+                            <label class="form-check-label" for="inlineCheckbox3" name = "check3">DB</label>
+                        </div>
+                        <div class="form-check form-check-inline">
+                            <input class="form-check-input" type="checkbox" id="inlineCheckbox4" value="SV" name = "check4">
+                            <label class="form-check-label" for="inlineCheckbox4" name = "check4">Server</label>
+                        </div>
+                        <div class="form-check form-check-inline">
+                          <input class="form-check-input" type="checkbox" id="inlineCheckbox5" value="ETC" name = "check5">
+                          <label class="form-check-label" for="inlineCheckbox5" name = "check5">ETC</label>
+                      </div>
+                    </div>
+                    <button type="submit" class="btn btn-outline-primary mb-2" >Submit</button>
+                </form>
+            </div>
+
+            <div class="container list mt-4">
+                <button type="button" class="btn btn-primary btn-lg btn-block" onclick = "location.href = 'list'">Go to my StudyList</button>
+            </div>
+        </div>
+
+        <%- include('footer.html') %>
+
+
+        <!-- Bootstrap 용 jquery-->
+        <script src="https://cdn.jsdelivr.net/npm/jquery@3.5.1/dist/jquery.slim.min.js"
+            integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj"
+            crossorigin="anonymous"></script>
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/js/bootstrap.bundle.min.js"
+            integrity="sha384-Fy6S3B9q64WdZWQUiU+q4/2Lc9npb8tCaSX9FK7E8HnRr0Jz8D6OP9dO5Vg3Q9ct"
+            crossorigin="anonymous"></script>
+</body>
+
+</html>

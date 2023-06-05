@@ -1,0 +1,77 @@
+<!doctype html>
+<html>
+
+<head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css"
+        integrity="sha384-xOolHFLEh07PJGoPkLv1IbcEPTNtaed2xpHsD9ESMhqIYd0nLMwNLD69Npy4HI+N" crossorigin="anonymous">
+
+    <!-- fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Hahmlet&display=swap" rel="stylesheet">
+
+    <!--reset.css-->
+    <link rel="stylesheet" href="css/reset.css">
+    
+    <title>Study Calendar</title>
+</head>
+
+<body>
+
+    <%- include('nav.ejs') %>
+
+    <div class="container text-center">
+        <form action = "/register" method = "POST">
+        <h4 class="align-center mt-5">회원 가입</h4>
+        
+        <div class="input-group mt-5 mb-3">
+            <div class="input-group-prepend">
+                <span class="input-group-text" id="name">NAME</span>
+            </div>
+            <input type="text" class="form-control" placeholder="UserName" aria-label="UserName"
+                aria-describedby="basic-addon1" name = "name">
+        </div>
+
+        <div class="input-group mt-5 mb-3">
+            <div class="input-group-prepend">
+                <span class="input-group-text" id="id">ID</span>
+            </div>
+            <input type="text" class="form-control" placeholder="UserID" aria-label="UserID"
+                aria-describedby="basic-addon1" name = "id">
+        </div>
+
+        <div class="input-group mt-5 mb-3">
+            <div class="input-group-prepend">
+                <span class="input-group-text" id="pw">PW</span>
+            </div>
+            <input type="text" class="form-control" placeholder="UserPW" aria-label="UserPW"
+                aria-describedby="basic-addon1" name = "pw">
+        </div>
+
+        <div class="input-group mt-5 mb-3">
+            <div class="input-group-prepend">
+                <span class="input-group-text" id="purpose">Study Purpose</span>
+            </div>
+            <input type="text" class="form-control" placeholder="UserPurpose and Introduce yourself" aria-label="UserPurpose"
+                aria-describedby="basic-addon1" name = "purpose">
+        </div>
+        <button type="submit" class="btn btn-outline-primary mt-5">Submit</button>
+        </form>
+    </div>
+
+    <%- include('footer.html') %>
+    <!-- Bootstrap 용 jquery-->
+    <script src="https://cdn.jsdelivr.net/npm/jquery@3.5.1/dist/jquery.slim.min.js"
+        integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj"
+        crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-Fy6S3B9q64WdZWQUiU+q4/2Lc9npb8tCaSX9FK7E8HnRr0Jz8D6OP9dO5Vg3Q9ct"
+        crossorigin="anonymous"></script>
+</body>
+
+</html>

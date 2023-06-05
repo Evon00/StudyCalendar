@@ -1,0 +1,9 @@
+@charset "utf-8";
+
+a, div,button,span,h1,h2,h3,h4,h5,label {font-family: 'Hahmlet', serif;}
+nav .navbar-brand {font-size: 35px;}
+nav a ,div, a{font-size: 18px;}
+
+@media (max-width: 990px){
+    .navbar-brand img{width: 50px; height:50px;}
+}

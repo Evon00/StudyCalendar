@@ -1,0 +1,104 @@
+<style>
+    ul,li {
+        list-style: none;
+    }
+
+    a {
+        color: #222;
+        text-decoration: none;
+    }
+
+    a:hover {
+        color: cornflowerblue;
+    }
+
+    .footer {
+        text-align: center;
+        padding: 30px 50px;
+    }
+
+    .footer li {
+        font-size: 13px;
+        position: relative;
+        display: inline;
+        padding: 0 7px 0 10px;
+        white-space: nowrap;
+    }
+
+    .footer .info li:before {
+        content: '';
+        width: 1px;
+        height: 17px;
+        background-color: #dbdbdb;
+        position: absolute;
+        left: 0;
+        top: 2px;
+    }
+
+    .footer .info li:first-child:before {
+        width: 0;
+    }
+
+    .footer address {
+        font-size: 18px;
+    }
+
+    li a {
+        font-size: 15px;
+    }
+</style>
+
+<div class="footer border-top mt-3">
+    <div class="container footer">
+        <section class="info">
+            <ul>
+                <li><a href="#" class="help">사이트 도움말</a></li>
+                <li><a href="#" class="help">사이트 이용약관</a></li>
+                <li><a href="#" class="help">사이트 운영원칙</a></li>
+                <li><a href="#" class="help"><strong>개인정보취급방침</strong></a></li>
+                <li><a href="#" class="help">책임의 한계와 법적고지</a></li>
+                <li><a href="#" class="help">게시중단요청서비스</a></li>
+                <li><a href="#" class="help">고객센터</a></li>
+            </ul>
+        </section>
+        <section>
+            <address>
+                Copyright ©
+                <a href="#"><strong>StudyCalendar</strong>
+                </a>
+                All Rights Reserved.
+            </address>
+        </section>
+    </div>
+</div>
+
+<!-- footer용 모달창 -->
+<div class="modal fade" id="staticBackdrop" data-backdrop="static" data-keyboard="false" tabindex="-1"
+    aria-labelledby="staticBackdropLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="staticBackdropLabel" style="color:#FF0000">주의 사항</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                해당 사이트는 연습용으로 만들어졌으며 개인이 만든 사이트입니다.
+                사이트에 본인의 개인정보를 올리지 말아주시고 문의사항은 아래번호로 문의해주세요
+                <p style="color:#545677; font-weight:bold">010-5426-9680</p>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script src="https://code.jquery.com/jquery-3.6.3.js"></script>
+<script>
+    $('.help').click(function (e) {
+        e.preventDefault();
+        $('#staticBackdrop').modal("show");
+    })
+</script>
