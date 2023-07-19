@@ -12,7 +12,7 @@ app.use(express.static(__dirname+'/public'));
 // db 접속 과정
 let db;
 
-MongoClient.connect('mongodb+srv://admin:436512@studycalendar.b7rrvbi.mongodb.net/?retryWrites=true&w=majority', function (err, client) {
+MongoClient.connect('mongodb+srv://몽고디비어드민계정:비밀번호@studycalendar.b7rrvbi.mongodb.net/?retryWrites=true&w=majority', function (err, client) {
     if (err) { return console.log(err); } //db 접속 실패시 오류 출력
     db = client.db('studycalendar'); //해당 폴더와 연결
     app.listen(8080, function () { //8080 포트로 접속
